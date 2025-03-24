@@ -1,0 +1,20 @@
+[
+    {
+        "id": "lr-001",
+        "name": "Women's Legal Aid Society",
+        "description": "Free legal assistance for women in need",
+        "contact": "1-800-LEGAL-AID",
+        "hours": "24/7",
+        "website": "https://wlas.org",
+        "services": ["Domestic Violence", "Family Law", "Protection Orders", "Immigration"]
+    },
+    {
+        "id": "lr-002",
+        "name": "Legal Rights Center",
+        "description": "Pro bono legal services for vulnerable women",
+        "contact": "1-888-RIGHTS",
+        "hours": "Mon-Fri 9AM-6PM",
+        "website": "https://legalrightscenter.org",
+        "services": ["Criminal Defense", "Civil Rights", "Employment Law"]
+    }
+]

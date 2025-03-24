@@ -1,0 +1,61 @@
+{% extends "base_layout.html" %}
+
+{% block title %}Legal Resources - WomenSafe Hub{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <h1>Legal Resources</h1>
+    
+    <section class="emergency-contact">
+        <h2>Emergency Legal Help</h2>
+        <div class="emergency-buttons">
+            <form action="/api/send-emergency-sms" method="post">
+                <button type="submit" class="emergency-button lawyer">Contact Legal Aid</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="resources-list">
+        <h2>Available Legal Resources</h2>
+        <div id="legal-resources-container">
+            <!-- Resources will be populated dynamically via JavaScript -->
+        </div>
+    </section>
+
+    <section class="legal-rights">
+        <h2>Know Your Rights</h2>
+        <ul>
+            <li>Right to file a police complaint</li>
+            <li>Right to legal representation</li>
+            <li>Right to protection orders</li>
+            <li>Right to compensation</li>
+        </ul>
+    </section>
+</div>
+
+<script>
+// Fetch and display legal resources
+fetch('/api/legal-resources')
+    .then(response => response.json())
+    .then(resources => {
+        const container = document.getElementById('legal-resources-container');
+        resources.forEach(resource => {
+            const resourceElement = document.createElement('div');
+            resourceElement.className = 'resource-card';
+            resourceElement.innerHTML = `
+                <h3>${resource.name}</h3>
+                <p>${resource.description}</p>
+                <p><strong>Contact:</strong> ${resource.contact}</p>
+                <p><strong>Available Hours:</strong> ${resource.hours}</p>
+                <a href="${resource.website}" target="_blank" class="button">Visit Website</a>
+            `;
+            container.appendChild(resourceElement);
+        });
+    })
+    .catch(error => {
+        console.error('Error fetching legal resources:', error);
+        document.getElementById('legal-resources-container').innerHTML = 
+            '<p class="error">Failed to load legal resources. Please try again later.</p>';
+    });
+</script>
+{% endblock %}

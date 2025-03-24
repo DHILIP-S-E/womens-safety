@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WomenSafe Hub</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Button Styling */
+        .redirect-button {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            margin: 10px auto;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff4081;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .redirect-button:hover {
+            background-color: #d81b60;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WomenSafe Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="legal-resources.html">Legal Resources</a></li>
+                <li><a href="medical-help.html">Medical Help</a></li>
+                <li><a href="ngo-directory.html">NGO Directory</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="quick-info">
+            <h2>Quick Safety Navigation</h2>
+            <div class="button-container">
+                <button class="redirect-button" onclick="redirectTo('legal-resources.html')">Legal Resources</button>
+                <button class="redirect-button" onclick="redirectTo('medical-help.html')">Medical Help</button>
+                <button class="redirect-button" onclick="redirectTo('ngo-directory.html')">NGO Directory</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 WomenSafe Hub. Emergency: Dial 911</p>
+    </footer>
+
+    <script>
+        function redirectTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

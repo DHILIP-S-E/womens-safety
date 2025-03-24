@@ -1,0 +1,11 @@
+  
+  
+{
+  "id": {"S": "H5"},
+  "name": {"S": "Oceanview Medical Center"},
+  "description": {"S": "Provides excellent dermatology and cosmetic treatments."},
+  "emergency_contact": {"S": "+1-800-222-3333"},
+  "address": {"S": "55 Coast Road, Miami, FL"},
+  "is_24_7": {"BOOL": false},
+  "services": {"L": [{"S": "Dermatology"}, {"S": "Plastic Surgery"}, {"S": "Wellness"}]}
+}

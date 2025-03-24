@@ -1,0 +1,24 @@
+[
+    {
+        "id": "h-001",
+        "name": "City General Hospital",
+        "description": "Full-service emergency medical care",
+        "emergency_contact": "911",
+        "address": "123 Main Street, Cityville",
+        "is_24_7": true,
+        "services": ["Emergency Care", "Trauma Center", "Women's Health"],
+        "latitude": 40.7128,
+        "longitude": -74.0060
+    },
+    {
+        "id": "h-002",
+        "name": "Women's Health Center",
+        "description": "Specialized healthcare for women",
+        "emergency_contact": "1-800-HEALTH",
+        "address": "456 Care Lane, Metropolis",
+        "is_24_7": true,
+        "services": ["Emergency Care", "OB/GYN", "Mental Health", "Counseling"],
+        "latitude": 40.7589,
+        "longitude": -73.9851
+    }
+]

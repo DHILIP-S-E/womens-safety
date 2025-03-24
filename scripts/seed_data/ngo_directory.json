@@ -1,0 +1,24 @@
+[
+    {
+        "id": "ngo-001",
+        "name": "Women's Support Network",
+        "description": "Comprehensive support services for women in crisis",
+        "services": ["Crisis Hotline", "Shelter", "Counseling", "Legal Aid"],
+        "contact": "support@wsn.org",
+        "phone": "1-800-SUPPORT",
+        "hours": "24/7",
+        "address": "789 Hope Street, Safetown",
+        "website": "https://wsn.org"
+    },
+    {
+        "id": "ngo-002",
+        "name": "Safe Haven Foundation",
+        "description": "Emergency shelter and support services",
+        "services": ["Emergency Shelter", "Counseling", "Job Training", "Child Care"],
+        "contact": "help@safehaven.org",
+        "phone": "1-888-SHELTER",
+        "hours": "24/7",
+        "address": "321 Safety Road, Secureville",
+        "website": "https://safehaven.org"
+    }
+]

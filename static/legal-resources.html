@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Resources - WomenSafe Hub</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WomenSafe Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="legal-resources.html" class="active">Legal Resources</a></li>
+                <li><a href="medical-help.html">Medical Help</a></li>
+                <li><a href="ngo-directory.html">NGO Directory</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content-wrapper">
+            <h1>Legal Resources</h1>
+            
+            <section class="emergency-section">
+                <h2>Emergency Legal Help</h2>
+                <div class="emergency-buttons">
+                    <form id="emergency-form">
+                        <button type="submit" class="emergency-button lawyer" aria-label="Contact Legal Aid">
+                            Contact Legal Aid
+                        </button>
+                    </form>
+                    <p id="emergency-message" class="message"></p>
+                </div>
+            </section>
+
+            <section class="resources-list">
+                <h2>Available Legal Resources</h2>
+                <div id="legal-resources-container">
+                    <!-- Resources will be populated dynamically via JavaScript -->
+                </div>
+            </section>
+
+            <section class="legal-rights">
+                <h2>Know Your Rights</h2>
+                <ul>
+                    <li>Right to file a police complaint</li>
+                    <li>Right to legal representation</li>
+                    <li>Right to protection orders</li>
+                    <li>Right to compensation</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 WomenSafe Hub. Emergency: Dial 911</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const legalResourcesContainer = document.getElementById('legal-resources-container');
+            const emergencyMessage = document.getElementById('emergency-message');
+
+            // Fetch and display legal resources
+            fetch('http://127.0.0.1:5000/api/legal-resources')
+                .then(response => response.json())
+                .then(resources => {
+                    legalResourcesContainer.innerHTML = ''; // Clear existing content
+                    if (resources.length === 0) {
+                        legalResourcesContainer.innerHTML = '<p class="info">No legal resources available at the moment.</p>';
+                        return;
+                    }
+                    resources.forEach(resource => {
+                        const resourceElement = document.createElement('div');
+                        resourceElement.className = 'resource-card';
+                        resourceElement.innerHTML = `
+                            <h3>${resource.name}</h3>
+                            <p>${resource.description}</p>
+                            <p><strong>Contact:</strong> ${resource.contact}</p>
+                            <p><strong>Available Hours:</strong> ${resource.hours}</p>
+                            <a href="${resource.website}" target="_blank" class="button">Visit Website</a>
+                        `;
+                        legalResourcesContainer.appendChild(resourceElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching legal resources:', error);
+                    legalResourcesContainer.innerHTML = 
+                        '<p class="error">Failed to load legal resources. Please try again later.</p>';
+                });
+
+            // Handle emergency SMS submission
+            document.getElementById('emergency-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+                
+                emergencyMessage.textContent = "Sending alert...";
+                emergencyMessage.className = "message";
+                emergencyMessage.style.display = "block";
+
+                fetch('http://127.0.0.1:5000/api/send-emergency-sms', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        emergencyMessage.textContent = data.message;
+                        emergencyMessage.className = "message success";
+                    })
+                    .catch(error => {
+                        console.error('Error sending emergency SMS:', error);
+                        emergencyMessage.textContent = "Failed to send emergency alert.";
+                        emergencyMessage.className = "message error";
+                    });
+            });
+        });
+    </script>
+</body>
+</html>

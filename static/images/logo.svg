@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 10H180C185.523 10 190 14.4772 190 20V30C190 35.5228 185.523 40 180 40H20C14.4772 40 10 35.5228 10 30V20C10 14.4772 14.4772 10 20 10Z" fill="#E91E63"/>
+    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="20" fill="white">WomenSafe Hub</text>
+</svg>

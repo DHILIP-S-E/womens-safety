@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Directory - WomenSafe Hub</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .hidden { display: none; } /* Initially hide messages */
+        #message {
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>WomenSafe Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="legal-resources.html">Legal Resources</a></li>
+                <li><a href="medical-help.html">Medical Help</a></li>
+                <li><a href="ngo-directory.html" class="active">NGO Directory</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="content-wrapper">
+            <h1>NGO Directory</h1>
+            
+            <section class="emergency-section">
+                <h2>Emergency Support</h2>
+                <div class="emergency-buttons">
+                    <form id="support-form" action="http://127.0.0.1:5000/api/send-safety-alert" method="post">
+                        <button type="submit" class="emergency-button">Contact Support</button>
+                        <p id="message" class="hidden"></p> <!-- Message appears here -->
+                    </form>
+                </div>
+            </section>
+
+            <section class="resources-list">
+                <h2>Available NGOs</h2>
+                <div id="ngo-directory-container">
+                    <!-- NGOs will be populated dynamically via JavaScript -->
+                </div>
+            </section>
+
+            <section class="ngo-info">
+                <h2>Support Services</h2>
+                <ul>
+                    <li>24/7 Helplines</li>
+                    <li>Shelter Homes</li>
+                    <li>Counseling Services</li>
+                    <li>Legal Aid</li>
+                    <li>Skill Development</li>
+                    <li>Rehabilitation Support</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 WomenSafe Hub. Emergency: Dial 911</p>
+    </footer>
+
+    <script>
+        // Handle form submission
+        document.getElementById("support-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent page reload
+
+            const messageElement = document.getElementById("message");
+            messageElement.textContent = "Sending request..."; // Initial message
+            messageElement.style.color = "black"; // Default color
+            messageElement.classList.remove("hidden"); // Show message
+
+            fetch(this.action, {
+                method: this.method,
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageElement.textContent = "Support contacted successfully!";
+                messageElement.style.color = "green"; // Success message
+            })
+            .catch(error => {
+                messageElement.textContent = "Failed to contact support. Try again.";
+                messageElement.style.color = "red"; // Error message
+            });
+        });
+
+        // Fetch and display NGO directory
+        fetch('http://127.0.0.1:5000/api/send-safety-alert')
+            .then(response => response.json())
+            .then(ngos => {
+                const container = document.getElementById('ngo-directory-container');
+                ngos.forEach(ngo => {
+                    const ngoElement = document.createElement('div');
+                    ngoElement.className = 'resource-card';
+                    ngoElement.innerHTML = `
+                        <h3>${ngo.name}</h3>
+                        <p>${ngo.description}</p>
+                        <p><strong>Services:</strong> ${ngo.services.join(', ')}</p>
+                        <p><strong>Contact:</strong> ${ngo.contact}</p>
+                        <p><strong>Hours:</strong> ${ngo.hours}</p>
+                        <p><strong>Address:</strong> ${ngo.address}</p>
+                        <div class="ngo-actions">
+                            <a href="${ngo.website}" target="_blank" class="button">Visit Website</a>
+                            <a href="tel:${ngo.phone}" class="button">Call Now</a>
+                        </div>
+                    `;
+                    container.appendChild(ngoElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching NGO directory:', error);
+                document.getElementById('ngo-directory-container').innerHTML = 
+                    '<p class="error">Failed to load NGO directory. Please try again later.</p>';
+            });
+    </script>
+</body>
+</html>

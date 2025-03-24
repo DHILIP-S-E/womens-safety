@@ -1,0 +1,98 @@
+/* Base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+header {
+    background-color: #ff69b4;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 1rem 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Emergency section */
+.emergency-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.emergency-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.emergency-button {
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.emergency-button.lawyer {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.emergency-button.ambulance {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Quick info section */
+.quick-info {
+    background-color: #f9f9f9;
+    padding: 2rem;
+    border-radius: 5px;
+}
+
+.quick-info ul {
+    list-style-position: inside;
+    margin-top: 1rem;
+}
+
+.quick-info li {
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
