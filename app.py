@@ -47,7 +47,6 @@ def get_hospitals():
     except Exception as e:
         logger.error(f"Error fetching hospitals: {str(e)}")
         return jsonify({'error': 'Failed to fetch hospitals'}), 500
-
 # API to Fetch Legal Resources
 @app.route('/api/legal-resources', methods=['GET'])
 def get_legal_resources():

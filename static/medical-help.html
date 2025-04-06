@@ -34,7 +34,7 @@
             <section class="emergency-section">
                 <h2>Emergency Medical Help</h2>
                 <div class="emergency-buttons">
-                    <form id="ambulance-form" action="http://127.0.0.1:5000/api/send-medical-alert" method="post">
+                    <form id="ambulance-form">
                         <button type="submit" class="emergency-button ambulance">Call Ambulance</button>
                         <p id="alert-message" class="hidden"></p> <!-- Message appears here -->
                     </form>
@@ -65,7 +65,7 @@
     </footer>
 
     <script>
-        // Handle form submission
+        // Handle ambulance request (POST method)
         document.getElementById("ambulance-form").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent full-page reload
 
@@ -74,47 +74,78 @@
             messageElement.style.color = "black"; // Default color
             messageElement.classList.remove("hidden"); // Make visible
 
-            fetch(this.action, {
-                method: this.method,
+            fetch('http://127.0.0.1:5000/api/send-medical-alert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    // You can add any needed request data here
+                    requestTime: new Date().toISOString()
+                })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 messageElement.textContent = "Ambulance requested successfully!";
                 messageElement.style.color = "green"; // Success message
             })
             .catch(error => {
+                console.error('Error requesting ambulance:', error);
                 messageElement.textContent = "Failed to request an ambulance. Try again.";
                 messageElement.style.color = "red"; // Error message
             });
         });
 
-        // Fetch and display hospitals
-        fetch('http://127.0.0.1:5000/api/send-medical-alert')
-            .then(response => response.json())
-            .then(hospitals => {
-                const container = document.getElementById('hospitals-container');
-                hospitals.forEach(hospital => {
-                    const hospitalElement = document.createElement('div');
-                    hospitalElement.className = 'resource-card';
-                    hospitalElement.innerHTML = `
-                        <h3>${hospital.name}</h3>
-                        <p>${hospital.description}</p>
-                        <p><strong>Emergency Contact:</strong> ${hospital.emergency_contact}</p>
-                        <p><strong>Address:</strong> ${hospital.address}</p>
-                        <p><strong>Available 24/7:</strong> ${hospital.is_24_7 ? 'Yes' : 'No'}</p>
-                        <p><strong>Services:</strong> ${hospital.services.join(', ')}</p>
-                        <a href="https://maps.google.com/?q=${encodeURIComponent(hospital.address)}" 
-                           target="_blank" class="button">Get Directions</a>
-                    `;
-                    container.appendChild(hospitalElement);
+        // Fetch hospital data (GET method)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Clear any existing content
+            const container = document.getElementById('hospitals-container');
+            container.innerHTML = '<p>Loading medical resources...</p>';
+            
+            // Fetch hospital data
+            fetch('http://127.0.0.1:5000/api/hospitals')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(hospitals => {
+                    // Clear loading message
+                    container.innerHTML = '';
+                    
+                    if (hospitals.length === 0) {
+                        container.innerHTML = '<p>No medical resources found at the moment.</p>';
+                        return;
+                    }
+                    
+                    // Display each hospital
+                    hospitals.forEach(hospital => {
+                        const hospitalElement = document.createElement('div');
+                        hospitalElement.className = 'resource-card';
+                        hospitalElement.innerHTML = `
+                            <h3>${hospital.name}</h3>
+                            <p>${hospital.description || ''}</p>
+                            <p><strong>Emergency Contact:</strong> ${hospital.emergency_contact || 'N/A'}</p>
+                            <p><strong>Address:</strong> ${hospital.address || 'N/A'}</p>
+                            <p><strong>Available 24/7:</strong> ${hospital.is_24_7 ? 'Yes' : 'No'}</p>
+                            <p><strong>Services:</strong> ${hospital.services ? hospital.services.join(', ') : 'General medical services'}</p>
+                            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(hospital.address)}"
+                                target="_blank" class="button">Get Directions</a>
+                        `;
+                        container.appendChild(hospitalElement);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching hospitals:', error);
+                    container.innerHTML = '<p class="error">Failed to load medical resources. Please try again later.</p>';
                 });
-            })
-            .catch(error => {
-                console.error('Error fetching hospitals:', error);
-                document.getElementById('hospitals-container').innerHTML = 
-                    '<p class="error">Failed to load hospitals. Please try again later.</p>';
-            });
+        });
     </script>
 </body>
 </html>
-    

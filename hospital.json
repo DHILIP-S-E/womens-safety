@@ -1,11 +1,8 @@
-  
-  
 {
-  "id": {"S": "H5"},
-  "name": {"S": "Oceanview Medical Center"},
-  "description": {"S": "Provides excellent dermatology and cosmetic treatments."},
-  "emergency_contact": {"S": "+1-800-222-3333"},
-  "address": {"S": "55 Coast Road, Miami, FL"},
-  "is_24_7": {"BOOL": false},
-  "services": {"L": [{"S": "Dermatology"}, {"S": "Plastic Surgery"}, {"S": "Wellness"}]}
+  "id": { "S": "legal-001" },
+  "title": { "S": "Free Legal Aid for Women" },
+  "description": { "S": "Provides free legal help for women in need." },
+  "contact": { "S": "+91-9876543210" },
+  "hours": { "S": "Mon-Fri 10am to 6pm" },
+  "website": { "S": "https://example-legal-help.org" }
 }
